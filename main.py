@@ -17,11 +17,5 @@ def git_update():
     if os.path.isfile("updater.py"):
         os.remove("updater.py")
 
-def leer():
-    with open("me-pican-los-cocos/sexo.TXT", 'r') as f:
-        lines = f.readlines()
-        for line in lines: print('\t' + line, end='')
-
-leer()
 git_update()
-leer()
+
