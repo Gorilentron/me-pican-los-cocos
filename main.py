@@ -3,17 +3,29 @@ import subprocess, yaml
 init()
 
 def pref_restore(preferences):
+    temp = ""
+
     with open("preferences.yml", "r") as f:
         new = yaml.load(f, Loader=yaml.FullLoader)["PREFERENCES"]
-
-    with open("preferences.yml", "w+") as f:
-        n_keys = new.keys()
         n_values = new.values()
         p_values = preferences.values()
-
+    
+    with open("preferences.yml", "r") as f:
         for x in f.readlines():
+            i = 0
+            
             for y in new:
-                if n_keys[y] in x: x.replace(n_values[y], p_values[y])
+                try:
+                    if y in x:
+                        x = x.replace(str(list(n_values)[i]), str(list(p_values)[i]))
+                        break
+                    i += 1
+                except: pass
+
+            temp = temp + x
+        
+        with open("preferences.yml", "w+") as f:
+            if temp != "": f.write(temp)
 
 def run(cmd):
     txt = f"powershell {cmd}"
@@ -37,10 +49,3 @@ def git_check(preferences):
         print(Fore.LIGHTGREEN_EX + f"[{Fore.LIGHTWHITE_EX}·{Fore.LIGHTGREEN_EX}] Updated" + Fore.RESET)
         pref_restore(preferences)
     else: git_update(preferences)
-
-
-
-
-with open("preferences.yml", "r") as f:
-    preferences = yaml.load(f, Loader=yaml.FullLoader)["PREFERENCES"]
-git_check(preferences)
