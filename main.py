@@ -19,6 +19,7 @@ def git_check():
 
     if "Already up to date" in str(process.stdout): 
         print(Fore.LIGHTGREEN_EX + f"[{Fore.LIGHTWHITE_EX}·{Fore.LIGHTGREEN_EX}] Already up to date" + Fore.RESET)
+    elif 'changed' in str(process): print(Fore.LIGHTGREEN_EX + f"[{Fore.LIGHTWHITE_EX}·{Fore.LIGHTGREEN_EX}] Updated" + Fore.RESET)
     else: git_update()
 
 git_check()
